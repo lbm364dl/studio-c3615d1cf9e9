@@ -77,7 +77,7 @@ floorRect(0,0,2.6,3.7);floorRect(2.74,0,2.1,3.7);floorRect(4.98,0,1.4,3.7);floor
 wall(-.12,-.12,6.5,-.12,[{a:.92,b:2.02,type:'balcony'},{a:3.32,b:4.42,type:'window'},{a:5.34,b:6.1,type:'window'}],.24);
 wall(-.12,0,-.12,4.46,[],.24);wall(6.5,0,6.5,4.77,[],.24);
 wall(2.67,0,2.67,3.77);wall(4.91,0,4.91,3.77);
-wall(0,3.77,6.38,3.77,[{a:0,b:1.7,type:'wardrobe'},{a:2.02,b:2.58,type:'door'},{a:3.37,b:4.08,type:'door'},{a:5.07,b:5.75,type:'door'}]);
+wall(0,3.77,6.38,3.77,[{a:0,b:1.7,type:'wardrobe'},{a:2.02,b:2.58,type:'door'},{a:2.80,b:3.51,type:'door'},{a:5.07,b:5.75,type:'door'}]);
 wall(0,4.41,1.77,4.41);wall(1.77,3.84,1.77,4.41);wall(1.83,3.84,1.83,7.36);
 wall(4.67,4.72,6.5,4.72,[{a:.12,b:.75,type:'door'}]);wall(4.67,4.79,4.67,7.24);wall(5.78,4.79,5.78,7.36,[],.24);
 wall(1.83,7.36,5.78,7.36,[{a:1.97,b:2.42,type:'window',sill:1.20,head:1.90},{a:.92,b:1.68,type:'door'},{a:3.01,b:3.64,type:'window'}],.24);
@@ -113,8 +113,8 @@ function addDetails(){
  // The ceiling is visible only at eye level; plan views retain an open roof.
  const ceilingRects=[[0,0,6.38,3.84],[0,3.84,1.7,.5],[1.9,3.84,2.7,3.4],[4.6,3.84,1.78,.81],[4.74,4.79,.92,2.45]];
  if(inside)for(const [x,z,w,d] of ceilingRects)box(x+w/2,2.66,z+d/2,w,.12,d,mats.wall);
- for(const [x,w] of [[2.02,.56],[3.37,.71],[5.07,.68]])floorRect(x,3.7,w,.14);floorRect(4.79,4.65,.63,.14);
- // Door at the entrance, white reveals, and wall plates seen in interior photos.
+ for(const [x,w] of [[2.02,.56],[2.80,.71],[5.07,.68]])floorRect(x,3.7,w,.14);floorRect(4.79,4.65,.63,.14);
+ // Entrance position/width remain provisional: photo supports a roughly central door, not measured coordinates.
  box(3.13,1.04,7.35,.75,2.08,.055,mats.dark);box(3.4,1.0,7.30,.09,.025,.025,mats.metal);
  for(const [x,z] of [[2.57,3.4],[4.8,3.4],[6.36,3.4],[4.59,6.9]]){box(x,1.12,z,.025,.09,.08,mats.white);box(x-.016,1.12,z,.008,.05,.04,mats.cabinet)}
  for(const [x,z] of [[.01,1.3],[2.75,1.2],[1.91,5.2]]){box(x,.30,z,.024,.09,.15,mats.white);for(const zz of [z-.035,z+.035]){const outlet=cylinder(x-.014,.3,zz,.016,.008,mats.dark);outlet.rotation.z=Math.PI/2}}
