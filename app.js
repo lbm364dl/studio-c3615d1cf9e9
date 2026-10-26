@@ -5,10 +5,10 @@ import { Walker } from './walking.mjs';
 import { Reflector } from './vendor/Reflector.js';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 const $=id=>document.getElementById(id), BASE_AREA=36.2958;
-const defaults={scale:100,walls:1.05,palette:'existing',furniture:true,labels:true,livingLayout:"daily"};
+const defaults={scale:100,walls:1.05,palette:'existing',furniture:true,labels:true,livingLayout:"folded"};
 let saved={};try{saved=JSON.parse(localStorage.getItem('homestudio.studio.v1'))||{}}catch{}
 if(saved.decorRevision!==1){saved.furniture=true;saved.decorRevision=1}
-if(saved.layoutRevision!==4){saved.livingLayout="daily";saved.layoutRevision=4}
+if(saved.layoutRevision!==12){saved.livingLayout="folded";saved.layoutRevision=12}
 const state={...defaults,...saved}; state.scale=Math.max(95,Math.min(110,Number(state.scale)||100));state.walls=Math.max(.15,Math.min(2.6,Number(state.walls)||1.05));
 let mode='orbit', inside=false;
 const EYE_HEIGHT=1.74, BODY_RADIUS=.18;
@@ -178,7 +178,7 @@ function updateAvatar(){
 }
 function leaveWalk(){inside=false;keys.clear();walker.stop();avatar.visible=false;controls.enabled=true;document.body.classList.remove('walking');if(document.pointerLockElement)document.exitPointerLock();$('walkHud').hidden=true;camera.up.set(0,1,0)}
 function enterWalk(id='living'){
- const starts={livingDecor:[3.15,7.0,-.45],living:[3.2,6.8,0],livingWindow:[3.25,4.45,Math.PI],bed1:[2.28,3.15,.55],bed2:[3.24,3.20,-.15],kitchen:[5.32,3.2,0],bath:[5.42,5.08,Math.PI]};let [x,z,a]=starts[id]||starts.living;
+ const starts={livingDecor:[2.95,6.90,-.28],living:[2.95,6.90,0],livingWindow:[2.94,4.40,Math.PI],bed1:[2.28,3.15,.55],bed2:[3.24,3.20,-.15],kitchen:[5.32,3.2,0],bath:[5.42,5.08,Math.PI]};let [x,z,a]=starts[id]||starts.living;
  inside=true;walkPaused=false;keys.clear();renderer.domElement.focus({preventScroll:true});mode='walk';controls.enabled=false;document.body.classList.add('walking');$('walkHud').hidden=false;$('walkRoom').value=starts[id]?id:'living';
  camera.up.set(0,1,0);camera.fov=65;camera.updateProjectionMatrix();camera.position.copy(world(x,EYE_HEIGHT,z));yaw=a;walker.reset(camera.position.x,camera.position.z,a);pitch=id==='livingDecor'?-.12:id==='bed1'?-.30:id==='bed2'?-.22:0;camera.rotation.set(pitch,yaw,0,'YXZ');$('walkMessage').textContent='↑ ↓ avanzar / retroceder · ← → girar · arrastra para mirar';build();
 }

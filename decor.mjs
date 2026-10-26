@@ -41,7 +41,7 @@ export function furnish(parent,mats,layout="daily"){
  }
  function curtain(x,z,width,height=2.30){const g=new THREE.PlaneGeometry(width,height,24,32),p=g.attributes.position;for(let i=0;i<p.count;i++){const px=p.getX(i),py=p.getY(i);p.setZ(i,.035*Math.sin((px/width)*Math.PI*10)+.012*Math.cos(py*7));p.setY(i,py+.008*Math.cos(px*40))}g.computeVertexNormals();const cloth=mats.cream;const o=add(g,cloth,x,2.35-height/2,z,false);o.material.side=THREE.DoubleSide;o.castShadow=false;return o}
  // Straight sofa-bed plus a separate movable ottoman; dining uses proper chairs.
- const sleeping=layout==='sleep',guests=layout==='guests';
+ const folded=layout==='folded';
  function diningChair(x,z,rot=0){
   const g=new THREE.Group();g.position.set(x,0,z);g.rotation.y=rot;parent.add(g);
   soft(0,.46,0,.46,.07,.44,mats.moss,.035,true,g);
@@ -49,7 +49,7 @@ export function furnish(parent,mats,layout="daily"){
   for(const dx of [-.17,.17])for(const dz of [-.16,.16])rod([dx,.43,dz],[dx,.02,dz+.025],.016,mats.walnut,g);
  }
  // No living-room storage in the occupied second bedroom.
- const sofa=new THREE.Group();sofa.position.set(4.16,0,6.10);sofa.scale.x=1.2;sofa.rotation.y=Math.PI/2;parent.add(sofa);
+ const sofa=new THREE.Group();sofa.position.set(3.86,0,6.06);sofa.scale.x=1.40/1.75;sofa.rotation.y=0;parent.add(sofa);
  soft(0,.28,0,1.75,.27,.80,mats.upholstery,.09,true,sofa);
  for(const x of [-.71,.71])for(const z of [-.27,.27])cyl(x,.09,z,.027,.022,.18,mats.walnut,true,sofa);
  soft(0,.66,.30,1.71,.60,.21,mats.upholstery,.085,true,sofa);
@@ -57,42 +57,43 @@ export function furnish(parent,mats,layout="daily"){
  for(const x of [-.36,.36]){soft(x,.46,-.065,.70,.18,.62,mats.cream,.08,true,sofa);const cushion=soft(x,.72,.16,.69,.42,.16,mats.upholstery,.075,true,sofa);cushion.rotation.x=-.13}
  const cushion=soft(-.51,.70,-.03,.36,.36,.15,mats.moss,.075,false,sofa);cushion.rotation.set(-.22,.15,-.16);
  const cushion2=soft(.54,.68,-.06,.32,.30,.14,mats.ochre,.065,false,sofa);cushion2.rotation.set(-.18,-.1,.20);
- contact(4.16,6.10,1.05,2.3);
- soft(3.35,.015,6.12,1.40,.025,1.90,mats.rug,.012,false);
-
- // Dining is independent of the sofa: two facing chairs daily, four for guests.
- if(sleeping){
-  soft(3.85,.31,6.10,1.40,.20,1.95,mats.upholstery,.045);
-  soft(3.85,.53,6.10,1.40,.18,1.95,mats.cream,.07);
-  soft(3.85,.64,6.40,1.36,.035,1.20,mats.moss,.016,false);
-  for(const z of [5.62,6.50])soft(4.16,.68,z,.38,.12,.56,mats.cream,.055,false);
-  // Drop-leaf table folded beside entry; everyday chairs moved to bedroom 2.
-  soft(2.12,.74,4.85,.30,.045,.80,mats.walnut,.016);
-  for(const z of [4.57,5.13])for(const x of [2.03,2.21])rod([x,.02,z],[x,.72,z],.017,mats.walnut);
-  diningChair(.45,3.15,0);diningChair(1.20,3.15,0);
+ contact(3.86,6.06,1.58,1.02);
+ soft(3.82,.015,5.74,1.45,.025,1.35,mats.rug,.012,false);
+ // Partition leaves an 82 cm corridor behind and an opening on its left.
+ // A conceptual anchored slatted screen, not a free-standing load-bearing specification.
+ soft(3.92,.70,4.70,1.36,1.40,.10,mats.walnut,.012);
+ for(let x=3.29;x<4.60;x+=.13)soft(x,1.84,4.70,.035,.88,.055,mats.walnut,.008);
+ soft(3.92,2.29,4.70,1.36,.035,.065,mats.walnut,.008);
+ // TV rests on a narrow console attached to the living-room face of the partition.
+ soft(3.92,.39,4.90,1.20,.48,.28,mats.walnut,.016);
+ for(const x of [3.41,4.43])for(const z of [4.81,4.99])cyl(x,.075,z,.015,.015,.15,mats.dark);
+ soft(3.92,.648,4.90,.40,.025,.23,mats.dark,.01,false);
+ soft(3.92,.73,4.88,.07,.15,.04,mats.dark,.007,false);
+ soft(3.92,1.06,4.88,.99,.56,.035,mats.dark,.015,false);
+ soft(3.92,1.06,4.902,.94,.515,.004,mats.metal,.001,false);
+ // Wall-mounted drop-leaf dining table, 100 × 80 cm open, 18 cm deep folded.
+ const tx=folded?2.02:2.32,tz=5.50;
+ soft(tx,.75,tz,folded?.18:.80,.04,1.00,mats.walnut,.016);
+ if(folded){
+  soft(1.99,.43,tz,.035,.60,.98,mats.walnut,.012);
+  // Chairs folded against the wall rather than removed from the scene.
+  for(const z of [5.18,5.75]){soft(2.12,.44,z,.09,.78,.43,mats.moss,.02);rod([2.14,.04,z-.17],[2.14,.83,z+.17],.012,mats.walnut)}
  }else{
-  const tx=guests?3.10:2.60,tz=guests?5.25:5.40,w=guests?1.20:.80,d=guests?.80:1.00;
-  soft(tx,.75,tz,w,.045,d,mats.walnut,.02);
-  for(const x of [tx-w/2+.08,tx+w/2-.08])for(const z of [tz-d/2+.08,tz+d/2-.08])rod([x,.02,z],[x,.73,z],.018,mats.walnut);
-  const places=guests?[[2.90,4.55,Math.PI],[3.45,4.55,Math.PI],[2.90,6.05,0],[3.45,6.05,0]]:[[2.60,4.55,Math.PI],[2.60,6.25,0]];
-  for(const [x,z,r] of places){diningChair(x,z,r);const pz=tz+(z<tz?-(d/2-.17):(d/2-.17));cyl(x,.78,pz,.12,.12,.015,mats.porcelain,false);mug(x+.17,.775,pz);
-   rod([x-.15,.782,pz-.08],[x-.15,.782,pz+.08],.004,mats.metal);
-  }
-  // Shared serving space at actual scale, in addition to the individual place settings.
-  cyl(tx,.80,tz,.135,.10,.065,mats.porcelain,false);
-  for(let i=0;i<7;i++){const a=i*2.4;ball(tx+Math.cos(a)*.075,.838,tz+Math.sin(a)*.075,.035,.016,.025,mats.leafLight)}
-  soft(tx+.25,.781,tz,.16,.012,.24,mats.walnut,.018,false);
-  for(let i=0;i<3;i++)ball(tx+.25,.803,tz-.065+i*.06,.045,.021,.027,mats.ochre);
-
+  for(const z of [5.10,5.90])rod([2.64,.02,z],[2.64,.73,z],.018,mats.walnut);
+  diningChair(2.32,4.65,Math.PI);diningChair(2.32,6.35,0);
+  for(const z of [5.17,5.83]){cyl(2.32,.78,z,.12,.12,.015,mats.porcelain,false);mug(2.50,.775,z)}
+  cyl(2.32,.80,5.50,.135,.10,.065,mats.porcelain,false);
+  for(let i=0;i<7;i++){const a=i*2.4;ball(2.32+Math.cos(a)*.075,.838,5.50+Math.sin(a)*.075,.035,.016,.025,mats.leafLight)}
  }
- // Freestanding shallow cabinet with a TV supported by its own central pedestal.
- soft(2.07,.33,6.64,.30,.46,1.18,mats.walnut,.018);
- for(const x of [1.97,2.17])for(const z of [6.15,7.13])cyl(x,.065,z,.017,.017,.13,mats.dark);
- for(const z of [6.34,6.94]){soft(2.226,.34,z,.018,.37,.56,mats.walnut,.008);soft(2.24,.45,z,.015,.012,.13,mats.brass,.003,false)}
- soft(2.07,.578,6.64,.23,.024,.40,mats.dark,.012,false);
- soft(2.04,.66,6.64,.04,.15,.07,mats.dark,.008,false);
- soft(2.04,.99,6.64,.038,.56,.99,mats.dark,.016,false);soft(2.064,.99,6.64,.004,.515,.94,mats.metal,.001,false);
- art(4.585,1.58,5.82,.52,.68,-Math.PI/2);art(4.585,1.58,6.48,.40,.55,-Math.PI/2);
+ // Shallow entry storage in the left corner, as in the supplied sketch.
+ soft(2.20,.43,7.02,.55,.72,.32,mats.walnut,.018);
+ for(const y of [.19,.45,.75])soft(2.20,y,7.00,.50,.025,.31,mats.walnut,.008);
+ soft(2.20,.44,6.85,.49,.62,.018,mats.cream,.006);soft(2.20,.59,6.83,.10,.012,.015,mats.brass,.004,false);
+ vase(2.20,.81,7.02,.16);
+ // Small side table; keep the centre and the route behind the sofa free.
+ cyl(4.40,.48,5.43,.14,.14,.025,mats.walnut);
+ cyl(4.40,.24,5.43,.018,.018,.46,mats.brass);cyl(4.40,.025,5.43,.11,.11,.025,mats.dark);
+ art(4.585,1.55,6.10,.45,.62,-Math.PI/2);
  // Both beds run across the rooms; headboards on the NW / negative-X wall.
  // 135 × 195 cm mattresses, pending confirmation against measured room widths.
  function transverseBed(x,z,accent){
