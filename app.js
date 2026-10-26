@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {furnish} from './decor.mjs';
+import {furnish} from './decor.mjs?v=efc53bc126db';
 import {RoundedBoxGeometry} from './vendor/RoundedBoxGeometry.js';
-import { Walker } from './walking.mjs';
+import { Walker } from './walking.mjs?v=bd0ab96db795';
 import { Reflector } from './vendor/Reflector.js';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 const $=id=>document.getElementById(id), BASE_AREA=36.2958;
