@@ -958,7 +958,9 @@ aside h1 {
   border-color: #314c3e;
   color: white;
 }
-#layoutNote {
+#layoutNote,
+#bed1Note,
+#bed2Note {
   margin: 10px 2px 2px;
   font-size: 11px;
   line-height: 1.5;
@@ -969,7 +971,9 @@ aside h1 {
     min-height: 44px;
     font-size: 14px;
   }
-  #layoutNote {
+  #layoutNote,
+#bed1Note,
+#bed2Note {
     font-size: 12px;
   }
 }
@@ -1078,4 +1082,567 @@ aside h1 {
     bottom: 110px;
     left: 10px;
   }
+}
+
+.walking-options h3 {
+  margin: 12px 0 0;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #6b775e;
+}
+
+#noLayouts,
+.walking-options .tip {
+  margin: 10px 2px 2px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #6b775e;
+}
+.walking-options .tip {
+  border-top: 1px solid #dfe3d8;
+  padding-top: 9px;
+}
+
+/* Luces de la casa: una fila por luz; las regulables llevan deslizador. */
+.lamp-controls {
+  margin: 10px 0;
+  padding: 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.lamp-title {
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+.lamp-row {
+  display: block;
+  margin: 4px 0;
+}
+.lamp-row.dim output {
+  float: right;
+  opacity: 0.7;
+}
+.lamp-row.dim input {
+  display: block;
+  width: 100%;
+}
+.lamp-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.lamp-buttons button {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 0.78rem;
+}
+
+/* ── Móvil ── */
+.quick-walk {
+  display: none;
+}
+@media (max-width: 850px), (pointer: coarse) {
+  /* Acceso directo al recorrido sobre la maqueta: el botón normal queda muy abajo en la página. */
+  body:not(.walking) .quick-walk {
+    display: block;
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 5;
+    padding: 11px 16px;
+    border: 0;
+    border-radius: 999px;
+    background: #2f4a3f;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 6px 18px #263b3640;
+  }
+  /* Ficha de producto: a todo el ancho, por encima de las flechas y sin taparlas. */
+  #productCard {
+    left: 10px;
+    bottom: 64px;
+    width: min(340px, calc(100% - 20px));
+    padding: 12px 14px 14px;
+  }
+  .walking #productCard {
+    left: 10px;
+    bottom: 142px;
+  }
+  /* Luces: texto legible con el dedo y casillas en dos columnas. */
+  .lamp-row {
+    font-size: 13px;
+  }
+  .lamp-row.check {
+    display: inline-block;
+    width: 48%;
+    margin: 7px 0;
+  }
+  .lamp-buttons button {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+}
+/* Móvil apaisado: la ficha va a la izquierda, bajo los menús, y se quita la ayuda de las flechas. */
+@media (max-width: 950px) and (max-height: 500px) {
+  .walking #productCard {
+    top: 122px;
+    bottom: auto;
+    width: 270px;
+    max-height: calc(100% - 132px);
+    overflow: auto;
+  }
+  .walking .touch-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 850px), (pointer: coarse) {
+  /* En la maqueta, el botón de recorrer ocupa el sitio de la ayuda de ratón, que en táctil sobra. */
+  #viewport > .hint {
+    display: none;
+  }
+}
+@media (max-width: 950px) and (max-height: 500px) {
+  .walking .walk-bottom {
+    display: none;
+  }
+}
+
+/* ───────────── Interfaz sin cajas ─────────────
+   La imagen manda. En el recorrido los controles son texto blanco sobre la propia imagen, sin
+   fondos ni bordes; lo que hay que elegir se abre en una hoja plana pegada al borde inferior,
+   de lado a lado, como una hoja de plano. Nada redondeado. */
+button,
+select,
+input,
+details,
+.segmented,
+.segmented button,
+.pill,
+.compass,
+.hint,
+.room-label,
+.note,
+#productCard,
+#productLink {
+  border-radius: 0 !important;
+}
+/* Maqueta: rótulos como anotaciones de plano, sin placa. */
+.pill,
+.compass,
+.room-label {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.room-label {
+  color: #1f2a24;
+  text-shadow:
+    0 0 3px #fff,
+    0 0 6px #fff;
+}
+#viewport > .hint {
+  display: none;
+}
+.segmented {
+  background: none;
+  padding: 0;
+  gap: 20px;
+  border-bottom: 1px solid #cfd4c7;
+}
+.segmented button {
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  color: #6b775e;
+  box-shadow: none;
+}
+.segmented .active {
+  background: none;
+  color: #1f2a24;
+  box-shadow: inset 0 -2px 0 #314c3e;
+}
+aside select {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid #cfd4c7;
+  padding-left: 0;
+}
+aside details {
+  border: 0;
+  background: none;
+}
+.view-settings {
+  margin-top: 14px;
+}
+.view-settings summary {
+  font-size: 12px;
+  color: #6b775e;
+  cursor: pointer;
+}
+
+/* Recorrido */
+.walk-top {
+  padding: 14px 18px 40px;
+  background: linear-gradient(#0b120e8c, transparent);
+}
+.walk-title,
+.walk-bottom,
+#lockMouse,
+#fullscreen {
+  display: none;
+}
+.walk-actions {
+  width: 100%;
+  gap: 0;
+  justify-content: space-between;
+}
+.walk-actions button,
+.walk-actions select {
+  background: none;
+  border: 0;
+  color: #fff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  text-shadow: 0 1px 3px #000a;
+  padding: 6px 0;
+  min-height: 0;
+}
+.walk-actions select {
+  font: 19px Georgia, serif;
+  max-width: 70%;
+  padding-right: 22px;
+}
+.walk-actions select option {
+  color: #1f2a24;
+  font: 15px Inter, system-ui, sans-serif;
+}
+#exitWalk {
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+/* Sombra inferior para que el texto de abajo se lea sobre cualquier fondo. */
+.walking #walkHud::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  background: linear-gradient(transparent, #0b120e80);
+  pointer-events: none;
+}
+/* Los dos menús, cerrados: dos palabras abajo a la izquierda. */
+.walking-options,
+.daylight-panel,
+.walking-options:not([open]),
+.daylight-panel:not([open]) {
+  position: absolute;
+  top: auto;
+  bottom: 22px;
+  left: 18px;
+  right: auto;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  overflow: visible;
+  z-index: 4;
+}
+.daylight-panel,
+.daylight-panel:not([open]) {
+  left: 140px;
+}
+.walking-options summary,
+.daylight-panel summary {
+  list-style: none;
+  min-height: 0;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #fff;
+  text-shadow: 0 1px 3px #000a;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  cursor: pointer;
+}
+.walking-options summary::-webkit-details-marker,
+.daylight-panel summary::-webkit-details-marker {
+  display: none;
+}
+/* Abiertos: hoja plana de lado a lado, pegada abajo. */
+.walking-options[open],
+.daylight-panel[open] {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  max-height: 62%;
+  padding: 0 18px 18px;
+  overflow: auto;
+  background: #f6f7f1;
+  border-top: 1px solid #1f2a24;
+  color: #1f2a24;
+  z-index: 8;
+}
+.walking-options[open] summary,
+.daylight-panel[open] summary {
+  position: sticky;
+  top: 0;
+  padding: 14px 0 10px;
+  background: #f6f7f1;
+  color: #1f2a24;
+  text-shadow: none;
+  text-decoration: none;
+  font: 19px Georgia, serif;
+}
+.walking-options[open] summary::after,
+.daylight-panel[open] summary::after {
+  content: 'Cerrar';
+  float: right;
+  font: 13px Inter, system-ui, sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding-top: 4px;
+}
+.layout-buttons {
+  gap: 0;
+  margin-top: 0;
+}
+.layout-buttons button {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #dfe3d8;
+  padding: 12px 0;
+  font-size: 15px;
+  color: #56635a;
+  text-align: left;
+}
+.layout-buttons button.active {
+  background: none;
+  color: #1f2a24;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 #314c3e;
+  padding-left: 12px;
+}
+#layoutNote,
+#bed1Note,
+#bed2Note,
+#noLayouts {
+  color: #56635a;
+  font-size: 13px;
+}
+.lamp-controls {
+  border: 0;
+  padding: 0;
+}
+.lamp-row {
+  font-size: 14px;
+}
+.lamp-row.check {
+  display: inline-block;
+  width: 48%;
+  margin: 8px 0;
+}
+.lamp-buttons {
+  gap: 24px;
+}
+.lamp-buttons button {
+  flex: none;
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #314c3e;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.daylight-panel input[type='range'],
+.daylight-panel input[type='checkbox'] {
+  accent-color: #314c3e;
+}
+/* Avanzar y retroceder: dos flechas dibujadas sobre la imagen. Girar se hace arrastrando. */
+.walk-pad {
+  right: 10px;
+  bottom: 14px;
+  z-index: 4;
+}
+.walk-pad [data-walk-key='ArrowLeft'],
+.walk-pad [data-walk-key='ArrowRight'] {
+  display: none;
+}
+.walk-pad button {
+  display: block;
+  width: 60px;
+  height: 56px;
+  margin: 0;
+  background: none;
+  border: 0;
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  text-shadow: 0 1px 4px #000c;
+}
+/* Ayuda: una línea de texto al entrar, que se va sola. */
+#walkToast {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 64px;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.5;
+  text-shadow: 0 1px 3px #000c;
+  pointer-events: none;
+  opacity: 0;
+}
+.walking #walkToast {
+  animation: walk-toast 7s ease forwards;
+}
+@keyframes walk-toast {
+  0%,
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* Ficha de un mueble: la misma hoja plana. */
+#productCard,
+.walking #productCard {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  width: auto;
+  max-height: none;
+  padding: 16px 18px 18px;
+  background: #f6f7f1;
+  border: 0;
+  border-top: 1px solid #1f2a24;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  z-index: 9;
+}
+#productLink {
+  justify-self: start;
+  padding: 10px 18px;
+}
+.quick-walk {
+  border-radius: 0 !important;
+}
+@media (min-width: 851px) and (pointer: fine) {
+  /* En pantalla grande las hojas no ocupan todo el ancho: columna a la izquierda. */
+  .walking-options[open],
+  .daylight-panel[open],
+  #productCard,
+  .walking #productCard {
+    right: auto;
+    width: 360px;
+    border-right: 1px solid #1f2a24;
+  }
+  #lockMouse,
+  #fullscreen {
+    display: inline-block;
+    font-size: 13px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    margin-left: 22px;
+  }
+  .walk-actions {
+    justify-content: flex-start;
+  }
+  #exitWalk {
+    margin-left: auto;
+  }
+}
+@media (max-width: 950px) and (max-height: 500px) {
+  .walking-options[open],
+  .daylight-panel[open] {
+    max-height: 80%;
+  }
+}
+button,
+summary,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+#viewStatus {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.walk-pad button,
+#canvasHost canvas {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Sentarse y tumbarse */
+#productActions {
+  display: flex;
+  gap: 24px;
+}
+#productActions[hidden],
+#standUp[hidden] {
+  display: none;
+}
+#productActions button {
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  font-size: 14px;
+  color: #314c3e;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+#standUp {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 5;
+  background: none;
+  border: 0;
+  padding: 10px 6px;
+  color: #fff;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-shadow: 0 1px 3px #000a;
+  pointer-events: auto;
+}
+
+/* Sentado no se camina: «Levantarse» ocupa el sitio de las flechas. */
+.seated .walk-pad {
+  display: none !important;
+}
+#standUp {
+  left: auto;
+  right: 18px;
+  transform: none;
+}
+
+#productActions {
+  flex-wrap: wrap;
+  gap: 6px 24px;
+}
+#productActions button[hidden] {
+  display: none;
 }

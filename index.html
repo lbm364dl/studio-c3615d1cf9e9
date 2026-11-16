@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <link rel="icon" href="data:,">
     <title>Home Studio · La casa en 3D</title>
-    <link rel="stylesheet" href="style.css?v=9e8497b33b3e">
+    <link rel="stylesheet" href="style.css?v=63332151df26">
     <script type="importmap">
       { "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }
     </script>
@@ -20,13 +20,8 @@
     <main>
       <!-- Panel lateral: solo visible en las vistas de maqueta (3D y planta). -->
       <aside>
-        <h1>Tu casa,<br>antes de entrar.</h1>
+        <h1>Tu casa, <br>antes de entrar.</h1>
         <p class="intro">Recórrela, mira la planta y prueba cómo usar el salón.</p>
-        <div class="stats">
-          <div><strong id="area">36.30</strong><span>m² · suelos del modelo</span></div>
-          <div><strong>38.69</strong><span>m² · superficie de referencia</span></div>
-        </div>
-        <div class="note">Modelo aproximado: las cotas del plano se contradicen y faltan medidas reales. Antes de comprar muebles, mide.</div>
 
         <section>
           <h2>Ver</h2>
@@ -44,30 +39,37 @@
             <option value="bath">Baño</option>
           </select>
           <p id="roomInfo" class="small"></p>
-          <button id="inside" class="wide primary">Recorrer en primera persona →</button>
+          <button id="inside" class="wide primary">Recorrer la casa</button>
         </section>
 
         <section>
-          <h2>Propuesta</h2>
-          <label class="check"><input type="checkbox" id="furniture"> Muebles y decoración</label>
+          <h2>Distribución</h2>
           <label for="livingLayoutPlan">Salón</label>
           <select id="livingLayoutPlan"></select>
-          <label for="palette">Acabados</label>
-          <select id="palette">
-            <option value="existing">Actual · blanco y madera</option>
-            <option value="warm">Idea · marfil cálido y roble</option>
-            <option value="sage">Idea · verde salvia suave</option>
-          </select>
-          <label class="check"><input type="checkbox" id="labels" checked> Nombres de las estancias</label>
-          <label for="walls">Altura de los muros <output id="wallValue"></output></label>
-          <input id="walls" type="range" min="0.15" max="2.6" step="0.05" value="1.05">
+          <label for="bed1LayoutPlan">Dormitorio 1</label>
+          <select id="bed1LayoutPlan"></select>
+          <label for="bed2LayoutPlan">Dormitorio 2</label>
+          <select id="bed2LayoutPlan"></select>
+          <details class="view-settings">
+            <summary>Ajustes de la vista</summary>
+            <label class="check"><input type="checkbox" id="furniture"> Muebles y decoración</label>
+            <label for="palette">Acabados</label>
+            <select id="palette">
+              <option value="existing">Actual · blanco y madera</option>
+              <option value="warm">Idea · marfil cálido y roble</option>
+              <option value="sage">Idea · verde salvia suave</option>
+            </select>
+            <label class="check"><input type="checkbox" id="labels" checked> Nombres de las estancias</label>
+            <label for="walls">Altura de los muros <output id="wallValue"></output></label>
+            <input id="walls" type="range" min="0.15" max="2.6" step="0.05" value="1.05">
+          </details>
         </section>
 
-        <details class="shopping" open>
-          <summary>Compra del salón · <span id="shoppingTotal"></span></summary>
-          <p class="small">Precios vistos el 16/11/2026 (hay ofertas de Black Friday). Pulsa un mueble en la vista 3D para ver su ficha.</p>
+        <details class="shopping">
+          <summary>Compra · <span id="shoppingTotal"></span></summary>
+          <p class="small">Salón, dormitorios y cocina. Precios vistos el 16/11/2026 (hay ofertas de Black Friday). Pulsa un mueble en la vista 3D para ver su ficha.</p>
           <div id="shoppingList"></div>
-          <p class="small">Entrega de IKEA dentro de casa: 59,90 € (49,90 € con IKEA Family). Montaje aparte, se elige en el carrito.</p>
+          <p class="small">Entrega de IKEA dentro de casa, pidiéndolo todo junto: 99 € con IKEA Family. Montaje aparte, se elige en el carrito.</p>
         </details>
 
         <details>
@@ -85,6 +87,11 @@
 
         <details>
           <summary>Escala y supuestos</summary>
+          <div class="stats">
+            <div><strong id="area">36.30</strong><span>m² · suelos del modelo</span></div>
+            <div><strong>38.69</strong><span>m² · superficie de referencia</span></div>
+          </div>
+          <div class="note">Modelo aproximado: las cotas del plano se contradicen y faltan medidas reales. Antes de comprar muebles, mide.</div>
           <p class="small">La geometría sigue las cotas escritas del plano cuando se puede. Altura de techo, grosor de muros, huecos y sanitarios son aproximados. No se propone ningún cambio estructural.</p>
           <label for="scale">Escala del plano <output id="scaleValue">100%</output></label>
           <input id="scale" type="range" min="95" max="110" step="0.1" value="100">
@@ -97,6 +104,7 @@
       </aside>
 
       <div id="viewport">
+        <button id="insideQuick" class="quick-walk" type="button">Recorrer la casa</button>
         <div class="view-heading">
           <span class="pill">HOME STUDIO · MODELO APROXIMADO</span>
           <span id="viewStatus"></span>
@@ -122,33 +130,51 @@
               </select>
               <button id="lockMouse">Mirar con el ratón</button>
               <button id="fullscreen">Pantalla completa</button>
-              <button id="exitWalk">Volver a la maqueta</button>
+              <button id="exitWalk">Salir</button>
             </div>
           </div>
 
           <details class="daylight-panel">
-            <summary>Luz, hora y orientación</summary>
+            <summary>Luz</summary>
             <label for="dayDate">Fecha</label>
             <input id="dayDate" type="date" value="2026-10-18">
             <label for="dayHour">Hora <output id="dayHourValue">10:00 Madrid</output></label>
             <input id="dayHour" type="range" min="7" max="22" step="0.5" value="10">
-            <label class="check"><input id="roomLamps" type="checkbox"> Encender luces interiores</label>
-            <label for="facadeAzimuth">Fachada dormitorios/cocina · azimut</label>
-            <input id="facadeAzimuth" type="number" min="0" max="359" step="1" value="75">
+            <div class="lamp-controls">
+              <p class="lamp-title">Luces de la casa</p>
+              <div id="lampList"></div>
+              <label class="lamp-row dim" for="lampTone">Salón · color de la luz <output id="lampToneValue">2700 K · cálida</output>
+                <input id="lampTone" type="range" min="2200" max="4000" step="50" value="2700">
+              </label>
+              <div class="lamp-buttons">
+                <button id="lampsOn" type="button">Encender todo</button>
+                <button id="lampsOff" type="button">Apagar todo</button>
+              </div>
+            </div>
             <p id="sunInfo"></p>
-            <p>Orientación de fachada aproximada: ENE, 75°. Ventana del salón pequeña. Iluminación visual orientativa.</p>
-            <p>Luz orientativa: no es un cálculo de lux ni tiene en cuenta edificios o patios que den sombra.</p>
           </details>
 
-          <details class="walking-options" open>
-            <summary>Disposición del salón</summary>
-            <div id="layoutButtons" class="layout-buttons"></div>
-            <p id="layoutNote"></p>
+          <details class="walking-options">
+            <summary id="roomMenuTitle">Salón</summary>
+            <div class="layout-group" data-room="living">
+              <div id="layoutButtons" class="layout-buttons"></div>
+              <p id="layoutNote"></p>
+            </div>
+            <div class="layout-group" data-room="bed1" hidden>
+              <div id="bed1Buttons" class="layout-buttons"></div>
+              <p id="bed1Note"></p>
+            </div>
+            <div class="layout-group" data-room="bed2" hidden>
+              <div id="bed2Buttons" class="layout-buttons"></div>
+              <p id="bed2Note"></p>
+            </div>
+            <p id="noLayouts" hidden>Aquí no hay disposiciones para elegir.</p>
           </details>
 
           <div class="crosshair" aria-hidden="true">+</div>
+          <button id="standUp" type="button" hidden>Levantarse</button>
+          <div id="walkToast">Arrastra para mirar. Pellizca para acercar. Toca puertas, persianas y luces para abrirlas o encenderlas; toca un mueble para ver qué puedes hacer con él.</div>
           <div class="walk-bottom">
-            <span class="touch-hint">Mantén las flechas para caminar o girar.<br>Arrastra la imagen para mirar.</span>
             <span id="walkMessage">↑ ↓ avanzar / retroceder · ← → girar · arrastra para mirar</span>
             <small>Shift: despacio · Esc: pausa · Medidas y acabados aproximados</small>
           </div>
@@ -168,11 +194,16 @@
           <b id="productName"></b>
           <span id="productDims"></span>
           <strong id="productPrice"></strong>
+          <div id="productActions" hidden>
+            <button id="sitHere" type="button">Sentarse aquí</button>
+            <button id="toggleHere" type="button"></button>
+            <button id="lieHere" type="button">Tumbarse aquí</button>
+          </div>
           <a id="productLink" target="_blank" rel="noopener"></a>
         </div>
         <div id="labelsLayer"></div>
         <div class="compass"><b>↑</b>FACHADA<span>fachada · ENE ≈ 75°</span></div>
-        <div class="hint">Arrastra para girar <i>·</i> Rueda para acercar <i>·</i> Pulsa un mueble para ver precio y enlace</div>
+        <div class="hint">Arrastra para girar <i>·</i> Rueda para acercar <i>·</i> Pulsa muebles y puertas</div>
         <div id="error" hidden>No se ha podido iniciar el 3D. Activa WebGL en el navegador. El plano de origen sigue disponible arriba.</div>
       </div>
     </main>
@@ -180,6 +211,6 @@
     <dialog id="evidence"><div class="dialog-head"><h2>Sobre el modelo</h2><button id="closeEvidence">Cerrar</button></div><p>Distribución experimental. Dimensiones, muebles e iluminación aproximados; verificar medidas antes de comprar mobiliario.</p><p>Esta copia pública no incluye documentos, planos originales ni fotografías de referencia.</p></dialog>
 
     <script src="vendor/suncalc.js"></script>
-    <script type="module" src="app.js?v=5c1773484cc1"></script>
+    <script type="module" src="app.js?v=a16b5c12f2cb"></script>
   </body>
 </html>
