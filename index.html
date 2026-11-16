@@ -1,11 +1,185 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" href="data:,"><title>Home Studio · Home studio</title><link rel="stylesheet" href="style.css?v=29d0db529502"><script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/"}}</script></head>
-<body><header><a class="brand" href="./">a<span> / </span>Home Studio</a><span class="project">HOME STUDIO <b>01 · Reconstruction</b></span><button id="sources">Sobre el modelo</button></header>
-<main><aside><div class="eyebrow">YOUR NEXT CHAPTER</div><h1>A place<br>to make yours.</h1><p class="intro">A first spatial model of your home.<br>Explore the existing layout, then try a little furniture.</p><div class="stats"><div><strong id="area">36.30</strong><span>m² · model estimate</span></div><div><strong>38.69</strong><span>m² · superficie de referencia</span></div></div><div class="note">Modelo aproximado con discrepancias de medidas pendientes de comprobar.</div>
-<section><h2>01 <span>Explore the space</span></h2><div class="segmented"><button id="orbit" class="active">3D overview</button><button id="top">Top view</button></div><label for="room">Room</label><select id="room"><option value="all">Whole home</option><option value="bed1">Bedroom 1 + balcony</option><option value="bed2">Bedroom 2</option><option value="kitchen">Kitchen</option><option value="living">Living room</option><option value="bath">Bathroom</option></select><button id="inside" class="wide">Recorrer en primera persona →</button><p id="roomInfo" class="small">Street-facing bedrooms and kitchen; entrance opens into the living room.</p></section>
-<section><h2>02 <span>Make room for ideas</span></h2><label class="check"><input type="checkbox" id="furniture"> Propuesta decorada · lino y madera</label><label class="check"><input type="checkbox" id="labels" checked> Room labels</label><label for="walls">Wall display <output id="wallValue">Cutaway</output></label><input id="walls" type="range" min="0.15" max="2.6" step="0.05" value="1.05"><label for="palette">Finish study</label><select id="palette"><option value="existing">Existing · white & wood</option><option value="warm">Idea · warm ivory & oak</option><option value="sage">Idea · muted sage</option></select></section>
-<details><summary>Scale & assumptions</summary><p class="small">Default geometry follows the written dimensions where possible. Ceiling height, wall thickness, openings and fixtures are approximate. No structural changes proposed.</p><label for="scale">Plan scale <output id="scaleValue">100%</output></label><input id="scale" type="range" min="95" max="110" step="0.1" value="100"><button id="calibrate" class="wide">Compare with 38.69 m²</button><p class="small">Comparison uniformly scales the footprint. It does not establish the real room dimensions. Balcony excluded; wardrobe included.</p><button id="reset" class="wide">Reset model</button></details>
-<footer>Preferencias guardadas en este dispositivo</footer></aside>
-<div id="viewport"><div class="view-heading"><span class="pill">HOME STUDIO / EXISTING LAYOUT</span><span id="viewStatus">Perspective · cutaway</span></div><div id="canvasHost"></div><div id="walkHud" hidden><div class="walk-top"><div class="walk-title"><b>Home Studio · Tu casa</b><span>Estatura 1,85 m · ojos ≈ 1,74 m</span></div><div class="walk-actions"><select id="walkRoom" aria-label="Ir a una habitación"><option value="livingDecor">Salón · decoración</option><option value="living">Salón / entrada</option><option value="livingWindow">Salón · puerta y ventana</option><option value="bed1">Dormitorio 1</option><option value="bed2">Dormitorio 2</option><option value="kitchen">Cocina</option><option value="bath">Baño</option></select><button id="lockMouse">Mirar con el ratón</button><button id="fullscreen">Pantalla completa</button><button id="exitWalk">Volver al plano</button></div></div><details class="daylight-panel"><summary>Luz, hora y orientación</summary><label for="dayDate">Fecha</label><input id="dayDate" type="date" value="2026-10-18"><label for="dayHour">Hora <output id="dayHourValue">10:00 Madrid</output></label><input id="dayHour" type="range" min="7" max="22" step="0.5" value="10"><label class="check"><input id="roomLamps" type="checkbox"> Encender luces interiores</label><label for="facadeAzimuth">Fachada dormitorios/cocina · azimut</label><input id="facadeAzimuth" type="number" min="0" max="359" step="1" value="75"><p id="sunInfo"></p><p>Orientación de fachada aproximada: ENE, 75°. Ventana del salón pequeña. Iluminación visual orientativa.</p><p>Luz visual aproximada: sin medición de lux ni levantamiento de edificios y patios que puedan dar sombra.</p></details><details class="walking-options"><summary>Decoración y recorrido</summary><label for="livingLayout">Cómo usamos el salón</label><select id="livingLayout"><option value="folded">Mesa plegada · estar</option><option value="daily">Comer dos · mesa 100 × 80</option></select><p>Propuesta con separador y tele delante del pasillo (≈ 82 cm detrás). Sofá compacto de 140 cm frente a la tele, adelantado hacia el centro para dejar ≈ 80 cm detrás junto a la entrada. Mesa plegable en pared izquierda y mueble bajo junto a la puerta. La entrada del piso tiene posición y anchura provisionales: el encaje del sofá junto a ella aún necesita medidas reales. Cuatro o cinco comensales y apertura de sofá cama no están resueltos en esta variante. Separador y soporte de tele conceptuales: fijación pendiente de diseñar. Puerta del dormitorio 2 corregida junto a la pared izquierda según indicación del comprador y foto.</p><label class="check"><input id="decorated" type="checkbox" checked> Mostrar casa decorada</label><label class="check"><input id="headMotion" type="checkbox" checked> Balanceo natural de los pasos</label><label class="check"><input id="footstepSound" type="checkbox" checked> Sonido de pisadas</label><label class="check"><input id="showLegs" type="checkbox" checked> Cuerpo y pies al mirar abajo</label><p>Marcha suave con apoyos alternos. Mantén Shift para caminar despacio. Pulsa sobre la imagen para retomar el control.</p><span id="gaitStatus">De pie · ojos ≈ 1,74 m</span></details><div class="crosshair" aria-hidden="true">+</div><div class="walk-bottom"><span class="touch-hint">Mantén las flechas para caminar o girar.<br>Arrastra la imagen para mirar.</span><span id="walkMessage">↑ ↓ avanzar / retroceder · ← → girar · arrastra para mirar</span><small>Mantén las flechas para caminar · Shift: despacio · Esc: pausa · Medidas y acabados aproximados</small></div><div class="walk-pad" aria-label="Controles de movimiento"><button data-walk-key="ArrowUp" aria-label="Avanzar">↑</button><div><button data-walk-key="ArrowLeft" aria-label="Girar a la izquierda">←</button><button data-walk-key="ArrowDown" aria-label="Retroceder">↓</button><button data-walk-key="ArrowRight" aria-label="Girar a la derecha">→</button></div></div></div><div id="labelsLayer"></div><div class="compass">FACHADA<br><b>↑</b><span>ENE ≈ 75°</span></div><div class="hint">Drag to orbit <i>·</i> Scroll to zoom <i>·</i> Right-drag to pan</div><div class="legend"><span></span> Existing shell <span></span> Approximate fixtures</div><div id="error" hidden>3D could not start. Please enable WebGL in your browser. The source plan remains available above.</div></div></main>
-<dialog id="evidence"><div class="dialog-head"><h2>Sobre el modelo</h2><button id="closeEvidence">Cerrar</button></div><p>Distribución experimental. Dimensiones, muebles e iluminación aproximados; verificar medidas antes de comprar mobiliario.</p><p>Esta copia pública no incluye documentos, planos originales ni fotografías de referencia.</p></dialog>
-<script src="vendor/suncalc.js"></script><script type="module" src="app.js?v=d079e08310ed"></script></body></html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8"><meta name="robots" content="noindex,nofollow,noarchive">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <link rel="icon" href="data:,">
+    <title>Home Studio · La casa en 3D</title>
+    <link rel="stylesheet" href="style.css?v=9e8497b33b3e">
+    <script type="importmap">
+      { "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }
+    </script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="./">Home Studio</a>
+      <span class="project">LA CASA EN 3D <b>Modelo aproximado · propuesta de muebles</b></span>
+      <button id="sources">Sobre el modelo</button>
+    </header>
+
+    <main>
+      <!-- Panel lateral: solo visible en las vistas de maqueta (3D y planta). -->
+      <aside>
+        <h1>Tu casa,<br>antes de entrar.</h1>
+        <p class="intro">Recórrela, mira la planta y prueba cómo usar el salón.</p>
+        <div class="stats">
+          <div><strong id="area">36.30</strong><span>m² · suelos del modelo</span></div>
+          <div><strong>38.69</strong><span>m² · superficie de referencia</span></div>
+        </div>
+        <div class="note">Modelo aproximado: las cotas del plano se contradicen y faltan medidas reales. Antes de comprar muebles, mide.</div>
+
+        <section>
+          <h2>Ver</h2>
+          <div class="segmented">
+            <button id="orbit" class="active">Maqueta 3D</button>
+            <button id="top">Planta</button>
+          </div>
+          <label for="room">Estancia</label>
+          <select id="room">
+            <option value="all">Toda la casa</option>
+            <option value="bed1">Dormitorio 1 y balcón</option>
+            <option value="bed2">Dormitorio 2</option>
+            <option value="kitchen">Cocina</option>
+            <option value="living">Salón</option>
+            <option value="bath">Baño</option>
+          </select>
+          <p id="roomInfo" class="small"></p>
+          <button id="inside" class="wide primary">Recorrer en primera persona →</button>
+        </section>
+
+        <section>
+          <h2>Propuesta</h2>
+          <label class="check"><input type="checkbox" id="furniture"> Muebles y decoración</label>
+          <label for="livingLayoutPlan">Salón</label>
+          <select id="livingLayoutPlan"></select>
+          <label for="palette">Acabados</label>
+          <select id="palette">
+            <option value="existing">Actual · blanco y madera</option>
+            <option value="warm">Idea · marfil cálido y roble</option>
+            <option value="sage">Idea · verde salvia suave</option>
+          </select>
+          <label class="check"><input type="checkbox" id="labels" checked> Nombres de las estancias</label>
+          <label for="walls">Altura de los muros <output id="wallValue"></output></label>
+          <input id="walls" type="range" min="0.15" max="2.6" step="0.05" value="1.05">
+        </section>
+
+        <details class="shopping" open>
+          <summary>Compra del salón · <span id="shoppingTotal"></span></summary>
+          <p class="small">Precios vistos el 16/11/2026 (hay ofertas de Black Friday). Pulsa un mueble en la vista 3D para ver su ficha.</p>
+          <div id="shoppingList"></div>
+          <p class="small">Entrega de IKEA dentro de casa: 59,90 € (49,90 € con IKEA Family). Montaje aparte, se elige en el carrito.</p>
+        </details>
+
+        <details>
+          <summary>Pendiente de medir en el piso</summary>
+          <p class="small">Lo que más condiciona la propuesta. Marca lo que ya tengas; se recuerda en este navegador.</p>
+          <label class="check todo"><input type="checkbox" data-measure="entrada"> Puerta de entrada: posición, ancho y pared libre a cada lado (decide si cabe un sofá contra esa pared)</label>
+          <label class="check todo"><input type="checkbox" data-measure="salon"> Salón: ancho y fondo libres (modelo 2,70 × 3,40 m)</label>
+          <label class="check todo"><input type="checkbox" data-measure="ventanaSalon"> Ventana del salón: tamaño y altura del alféizar (modelo ≈ 45 × 70 cm a 1,20 m)</label>
+          <label class="check todo"><input type="checkbox" data-measure="dormitorio1"> Dormitorio 1: el plano dice 2,60 y 2,55 de ancho, 3,70 y 3,40 de fondo</label>
+          <label class="check todo"><input type="checkbox" data-measure="dormitorio2"> Dormitorio 2: ancho real (modelo 2,10 m; la cama de 135 atravesada lo ocupa casi entero)</label>
+          <label class="check todo"><input type="checkbox" data-measure="puertas"> Puertas interiores: posición, ancho y hacia dónde abren</label>
+          <label class="check todo"><input type="checkbox" data-measure="bano"> Baño: ancho (modelo 0,92 m) y posición de la ducha</label>
+          <label class="check todo"><input type="checkbox" data-measure="techo"> Altura de techo (modelo 2,60 m), fondo del armario empotrado y balcón</label>
+        </details>
+
+        <details>
+          <summary>Escala y supuestos</summary>
+          <p class="small">La geometría sigue las cotas escritas del plano cuando se puede. Altura de techo, grosor de muros, huecos y sanitarios son aproximados. No se propone ningún cambio estructural.</p>
+          <label for="scale">Escala del plano <output id="scaleValue">100%</output></label>
+          <input id="scale" type="range" min="95" max="110" step="0.1" value="100">
+          <button id="calibrate" class="wide">Ajustar a la superficie de referencia</button>
+          <p class="small">El ajuste escala toda la planta por igual; es un escenario, no demuestra las medidas reales de cada estancia. Sin balcón; con armario.</p>
+          <button id="reset" class="wide">Restablecer el modelo</button>
+        </details>
+
+        <footer>Preferencias guardadas en este dispositivo</footer>
+      </aside>
+
+      <div id="viewport">
+        <div class="view-heading">
+          <span class="pill">HOME STUDIO · MODELO APROXIMADO</span>
+          <span id="viewStatus"></span>
+        </div>
+        <div id="canvasHost"></div>
+
+        <!-- Recorrido en primera persona -->
+        <div id="walkHud" hidden>
+          <div class="walk-top">
+            <div class="walk-title">
+              <b>Home Studio · Tu casa</b>
+              <span>Estatura 1,85 m · ojos ≈ 1,74 m</span>
+            </div>
+            <div class="walk-actions">
+              <select id="walkRoom" aria-label="Ir a una habitación">
+                <option value="livingDecor">Salón · decoración</option>
+                <option value="living">Salón / entrada</option>
+                <option value="livingWindow">Salón · puerta y ventana</option>
+                <option value="bed1">Dormitorio 1</option>
+                <option value="bed2">Dormitorio 2</option>
+                <option value="kitchen">Cocina</option>
+                <option value="bath">Baño</option>
+              </select>
+              <button id="lockMouse">Mirar con el ratón</button>
+              <button id="fullscreen">Pantalla completa</button>
+              <button id="exitWalk">Volver a la maqueta</button>
+            </div>
+          </div>
+
+          <details class="daylight-panel">
+            <summary>Luz, hora y orientación</summary>
+            <label for="dayDate">Fecha</label>
+            <input id="dayDate" type="date" value="2026-10-18">
+            <label for="dayHour">Hora <output id="dayHourValue">10:00 Madrid</output></label>
+            <input id="dayHour" type="range" min="7" max="22" step="0.5" value="10">
+            <label class="check"><input id="roomLamps" type="checkbox"> Encender luces interiores</label>
+            <label for="facadeAzimuth">Fachada dormitorios/cocina · azimut</label>
+            <input id="facadeAzimuth" type="number" min="0" max="359" step="1" value="75">
+            <p id="sunInfo"></p>
+            <p>Orientación de fachada aproximada: ENE, 75°. Ventana del salón pequeña. Iluminación visual orientativa.</p>
+            <p>Luz orientativa: no es un cálculo de lux ni tiene en cuenta edificios o patios que den sombra.</p>
+          </details>
+
+          <details class="walking-options" open>
+            <summary>Disposición del salón</summary>
+            <div id="layoutButtons" class="layout-buttons"></div>
+            <p id="layoutNote"></p>
+          </details>
+
+          <div class="crosshair" aria-hidden="true">+</div>
+          <div class="walk-bottom">
+            <span class="touch-hint">Mantén las flechas para caminar o girar.<br>Arrastra la imagen para mirar.</span>
+            <span id="walkMessage">↑ ↓ avanzar / retroceder · ← → girar · arrastra para mirar</span>
+            <small>Shift: despacio · Esc: pausa · Medidas y acabados aproximados</small>
+          </div>
+          <div class="walk-pad" aria-label="Controles de movimiento">
+            <button data-walk-key="ArrowUp" aria-label="Avanzar">↑</button>
+            <div>
+              <button data-walk-key="ArrowLeft" aria-label="Girar a la izquierda">←</button>
+              <button data-walk-key="ArrowDown" aria-label="Retroceder">↓</button>
+              <button data-walk-key="ArrowRight" aria-label="Girar a la derecha">→</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="productCard" hidden>
+          <button id="productClose" aria-label="Cerrar ficha">✕</button>
+          <span id="productSeller"></span>
+          <b id="productName"></b>
+          <span id="productDims"></span>
+          <strong id="productPrice"></strong>
+          <a id="productLink" target="_blank" rel="noopener"></a>
+        </div>
+        <div id="labelsLayer"></div>
+        <div class="compass"><b>↑</b>FACHADA<span>fachada · ENE ≈ 75°</span></div>
+        <div class="hint">Arrastra para girar <i>·</i> Rueda para acercar <i>·</i> Pulsa un mueble para ver precio y enlace</div>
+        <div id="error" hidden>No se ha podido iniciar el 3D. Activa WebGL en el navegador. El plano de origen sigue disponible arriba.</div>
+      </div>
+    </main>
+
+    <dialog id="evidence"><div class="dialog-head"><h2>Sobre el modelo</h2><button id="closeEvidence">Cerrar</button></div><p>Distribución experimental. Dimensiones, muebles e iluminación aproximados; verificar medidas antes de comprar mobiliario.</p><p>Esta copia pública no incluye documentos, planos originales ni fotografías de referencia.</p></dialog>
+
+    <script src="vendor/suncalc.js"></script>
+    <script type="module" src="app.js?v=5c1773484cc1"></script>
+  </body>
+</html>
